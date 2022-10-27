@@ -1,0 +1,12 @@
+89983000:
+- - architecture: amd64
+    digest: sha256:7f1aefd407ab5c9d4bdc9f7ee442e1c01e427ce8a841a9c1745015a32560fe9a
+    features: ''
+    last_pulled: '2022-04-05T05:19:20.391715Z'
+    last_pushed: '2022-04-02T02:50:27.756526Z'
+    os: linux
+    os_features: ''
+    os_version: null
+    size: 430186015
+    status: active
+    variant: null

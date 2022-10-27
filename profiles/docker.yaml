@@ -1,0 +1,10 @@
+host: 'https://hub.docker.com/'
+tuple_location: 'results'
+data_location:
+  id: 'id'
+  images: 'images'
+number_rows: 1
+pages: ''
+empty_page: ''
+report_location: 'reports/awvs_report.yaml'
+api_link: 'https://hub.docker.com/v2/repositories/secfa/docker-awvs/tags/?page_size=25&page=1'

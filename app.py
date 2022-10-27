@@ -4,8 +4,9 @@ from telegram.ext import Updater
 import requests
 import re
 import yaml
-from constants import BOT_TOKEN,CHAT_ID
+from constants import BOT_TOKEN,CHAT_ID,DISCORD_URL
 import postman
+from discord_webhook import DiscordWebhook
 #import os
 
 #os.chdir('/home/antqt/Security-Alert/')
@@ -81,16 +82,6 @@ def get_current_record(tuple_location,data_location,number_rows,pages,empty_page
 
 	return dict(list(records.items())[:number_rows])
 
-# def get_old_record(location):
-# 	try:
-# 		with open(location) as f:
-# 			records = 
-# 	except:
-# 		print("Can't find old records!")
-# 		records={}
-
-	return records
-
 def write_yaml(destination,content):
 	with open(destination, 'w') as file:
 		yaml.dump(content, file)
@@ -102,7 +93,12 @@ def format_message(links):
 		""".format(link)
 		messages.append(message)
 	return messages
-	
+
+
+def send_discord(messages):
+	for message in messages:
+		webhook = DiscordWebhook(url=DISCORD_URL, content=message)
+		webhook.execute()
 
 if __name__ == '__main__':
 	old_record=postman.read_file_into_list("log.txt")
@@ -112,6 +108,6 @@ if __name__ == '__main__':
 
 	if(len(diff)!=0):
 		message_list=format_message(diff)
-		send(message_list)
+		send_discord(message_list)
 		postman.print_and_write("log.txt","\n".join(current_record),"w")
 

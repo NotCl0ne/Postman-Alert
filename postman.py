@@ -84,16 +84,20 @@ def extract_collection_id_from_results(results, score):
 	global list_of_error_collection_id
 
 	extracted_result_array = []
-	results = results['data']
-	for result in results:
-		if result["score"]>=score and result['document']['id'] not in list_of_error_collection_id:
-			try:
-				if any(element in result['document']['workspaces'][0]['slug'].lower() for element in zalo_keyword) or any(element in result['document']['name'].lower() for element in zalo_keyword) or any(element in result['requests']['document']['name'].lower() for element in zalo_keyword) or re.search(zalo_url_regex, result['requests']['document']['url'].lower()):
-					collection = postman_collection(result['document']['id'], result['document']['publisherHandle'], result['document']['workspaces'][0]['slug'])
-					extracted_result_array.append(collection)
-			except:
-				# print_and_write(log_file_location, "[-] id {id} don't have any workspace, pass".format(id=result['document']['id']), Fore.RED)
-				list_of_error_collection_id.append(result['document']['id'])
+	try:
+		results = results['data']
+		for result in results:
+			if result["score"]>=score and result['document']['id'] not in list_of_error_collection_id:
+				try:
+					if any(element in result['document']['workspaces'][0]['slug'].lower() for element in zalo_keyword) or any(element in result['document']['name'].lower() for element in zalo_keyword) or any(element in result['requests']['document']['name'].lower() for element in zalo_keyword) or re.search(zalo_url_regex, result['requests']['document']['url'].lower()):
+						collection = postman_collection(result['document']['id'], result['document']['publisherHandle'], result['document']['workspaces'][0]['slug'])
+						extracted_result_array.append(collection)
+				except:
+					# print_and_write(log_file_location, "[-] id {id} don't have any workspace, pass".format(id=result['document']['id']), Fore.RED)
+					list_of_error_collection_id.append(result['document']['id'])
+		
+	except:
+		pass
 	return extracted_result_array
 	
 def find_sensitive(item):

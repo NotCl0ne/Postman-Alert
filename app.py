@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+from email import message
 from flask import message_flashed
 from telegram.ext import Updater
 import requests
@@ -109,5 +110,6 @@ if __name__ == '__main__':
 	if(len(diff)!=0):
 		message_list=format_message(diff)
 		send_discord(message_list)
+		send(message_list)
 		postman.print_and_write("log.txt","\n".join(current_record),"w")
 
